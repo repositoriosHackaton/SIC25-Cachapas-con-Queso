@@ -1,0 +1,84 @@
+/*General*/
+
+body {
+  font-family: "Roboto";
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* header,
+footer,
+main {
+} */
+
+header,
+footer {
+  width: 100%;
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/*Header Adjustments*/
+
+header {
+  top: 0;
+  left: 0;
+  padding: 10px 60px 10px 30px;
+}
+
+.site_logo {
+  width: 7rem;
+}
+
+.github_logo {
+  width: 2.5rem;
+}
+
+/*Main Adjustments*/
+
+main {
+  width: 50%;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+}
+
+.main_btn {
+  padding: 1.6rem 6rem;
+  background-color: #aff4c6;
+  border-radius: 20px;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.main_btn:visited {
+  color: #0d99ff;
+}
+
+/*Footer Adjustments*/
+
+footer {
+  width: 100%;
+  height: 3rem;
+  bottom: 0;
+  left: 0;
+  padding: 0 10px 0 30px;
+}
+
+.credits {
+  font-size: 1.3rem;
+  color: #0d99ff;
+  padding-bottom: 20px;
+}
