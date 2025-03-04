@@ -9,6 +9,7 @@
   </head>
   <body>
     <aside>
+      <a href="/index.html" class="index-btn">Volver Al Inicio</a>
       <div class="history-msg">
         <h3>Receta ejemplo</h3>
         <div class="nutri-values">
@@ -30,5 +31,37 @@
       </div>
       <div class="main-content"></div>
     </main>
+    <button id="chat-button" class="chat-button">
+      <div class="yolk-container">
+        <span></span>
+      </div>
+    </button>
+    <div id="chat-window" class="chat-window">
+      <span class="cerrar">&times;</span>
+      <div id="chat-zone" class="chat-zone">
+        <div id="chat-messages" class="messages-zone"></div>
+        <div class="message-input-zone">
+          <input
+            type="text"
+            id="message-input"
+            placeholder="Escribe tu solicitud..."
+          />
+          <div id="send-button" class="send-button">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="40px"
+              viewBox="0 -960 960 960"
+              width="40px"
+              fill="#CCCCCC"
+            >
+              <path
+                d="M120-160v-640l760 320-760 320Zm66.67-102 520.66-218-520.66-220v158.67L428-480l-241.33 60v158Zm0 0v-438 438Z"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="assets/js/scripts_main.js"></script>
   </body>
 </html>
