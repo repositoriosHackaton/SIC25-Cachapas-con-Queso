@@ -1,3 +1,13 @@
+:root {
+  --color-verde-grisaceo: #879639;
+  --color-verde-lima: #b4cc5d;
+  --color-verde-aux: #a1ea89;
+  --color-rojo-siena: #ad220b;
+  --color-amarillo-crema: #fbf7c7;
+  --color-naranja-mandarina: #f47d0d;
+  --color-marron-oscuro: #6d3d03;
+}
+
 @font-face {
   font-family: "Roboto";
   src: url("../resources/fonts/static/Roboto-Medium.ttf") format("truetype");
