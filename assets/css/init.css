@@ -1,11 +1,11 @@
 :root {
-  --color-verde-grisaceo: #879639;
-  --color-verde-lima: #b4cc5d;
-  --color-verde-aux: #a1ea89;
-  --color-rojo-siena: #ad220b;
-  --color-amarillo-crema: #fbf7c7;
-  --color-naranja-mandarina: #f47d0d;
-  --color-marron-oscuro: #6d3d03;
+  --color-principal: #a2ba58;
+  --color-secundario: #dfe385;
+  --color-aux-1: #ce8342;
+  --color-aux-2: #35240d;
+  --color-nutr-facts: #292b33;
+  --color-n: #;
+  --color-m: #;
 }
 
 @font-face {

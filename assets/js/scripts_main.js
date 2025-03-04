@@ -50,3 +50,21 @@ function chatSystem() {
 document.addEventListener("DOMContentLoaded", (e) => {
   chatSystem();
 });
+
+async function consultarAPI(itemId, query) {
+  const url = `http://127.0.0.1:8000/items/${itemId}${
+    query ? `?q=${query}` : ""
+  }`;
+
+  try {
+    const respuesta = await fetch(url);
+    const datos = await respuesta.json();
+    console.log(datos); // Imprime el resultado en la consola
+  } catch (error) {
+    console.error("Error al consultar la API:", error);
+  }
+}
+
+// Ejemplo de uso:
+consultarAPI(123, "test"); // Consulta /items/123?q=test
+consultarAPI(456); // Consulta /items/456
