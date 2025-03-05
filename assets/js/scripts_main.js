@@ -51,22 +51,48 @@ document.addEventListener("DOMContentLoaded", (e) => {
   chatSystem();
 });
 
-async function consultarAPI(itemId, query) {
-  const url = `http://127.0.0.1:8000/items/${itemId}${
-    query ? `?q=${query}` : ""
-  }`;
+// async function consultarAPI(itemId, query) {
+//   const url = `http://127.0.0.1:8000/items/${itemId}${
+//     query ? `?q=${query}` : ""
+//   }`;
 
+//   try {
+//     const respuesta = await fetch(url);
+//     const datos = await respuesta.json();
+//     console.log(datos); // Imprime el resultado en la consola
+//   } catch (error) {
+//     console.error("Error al consultar la API:", error);
+//   }
+// }
+
+// // Ejemplo de uso:
+// consultarAPI(123, "test"); // Consulta /items/123?q=test
+// consultarAPI(456); // Consulta /items/456
+
+//---------------------------------------------------------------
+
+async function obtenerDatos(cadenaTexto) {
   try {
-    const respuesta = await fetch(url);
-    const datos = await respuesta.json();
-    console.log(datos); // Imprime el resultado en la consola
+    const response = await fetch(
+      `http://127.0.0.1:8000/obtener_ejemplo?cadena_texto=${cadenaTexto}`
+    );
+    const datos = await response.json();
+
+    // Imprimir el objeto JSON completo
+    console.log(datos);
+
+    // Imprimir cada clave con su valor
+    for (const clave in datos) {
+      console.log(`${clave}: ${datos[clave]}`);
+    }
+
+    return datos; // Opcional: retornar los datos para usarlos en otro lugar
   } catch (error) {
-    console.error("Error al consultar la API:", error);
+    console.error("Error al obtener datos:", error);
+    return null; // Opcional: retornar null en caso de error
   }
 }
 
 // Ejemplo de uso:
-consultarAPI(123, "test"); // Consulta /items/123?q=test
-consultarAPI(456); // Consulta /items/456
-
-//---------------------------------------------------------------
+const texto = "Texto de ejemplo";
+console.log(obtenerDatos(texto));
