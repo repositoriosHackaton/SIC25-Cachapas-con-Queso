@@ -1,6 +1,7 @@
 /*General*/
 
 body {
+  background-color: #fff;
   font-family: "Roboto";
   height: 100vh;
   overflow: hidden;
@@ -90,8 +91,7 @@ footer {
 
 body {
   margin: 0;
-  overflow: hidden; /* Oculta las barras de desplazamiento */
-  background-color: #fff; /* Fondo negro */
+  overflow: hidden;
 }
 
 .container {

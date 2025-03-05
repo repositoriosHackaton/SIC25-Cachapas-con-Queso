@@ -22,12 +22,15 @@ aside {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  max-height: 100vh;
+  overflow-y: auto;
 }
 
 .index-btn {
+  z-index: 5;
   position: fixed;
-  color: var(--color-verde-grisaceo);
-  background-color: var(--color-aux-1);
+  background-color: var(--color-nutr-facts);
+  color: var(--color-claro2);
   top: 0;
   left: 0;
   padding: 5px;
@@ -36,15 +39,17 @@ aside {
 }
 
 .index-btn:hover {
-  color: white;
+  color: #fbf7c758;
 }
 
 .history-msg {
   background-color: var(--color-nutr-facts);
   color: #fff;
   padding: 5px;
+  margin-top: 1rem;
   width: 100%;
-  height: 100px;
+  height: 125px;
+  border-radius: 5px;
 }
 
 .nutri-values {
@@ -61,22 +66,100 @@ aside {
   display: flex;
   gap: 3px;
   flex-direction: column;
-  justify-content: flex-end;
   flex-wrap: wrap;
 }
 
 .total-cal {
   font-size: 1.2rem;
-  position: absolute;
   top: 0;
   left: 0;
 }
+
+/* NUTRI */
+
+.main-nutri-card {
+  display: flex;
+  height: 45%;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 2;
+}
+
+.main-nutri-card .nutri-values {
+  width: 99%;
+  height: 99%;
+}
+
+.main-nutri-card .total-cal {
+  font-size: 2rem;
+}
+
+.main-nutri-card .values {
+  font-size: 0.8rem;
+}
+
+.fw-big {
+  font-size: 1.4rem;
+}
+.total-cal {
+  font-size: 1.2rem;
+}
+
+.main-nutri-card .nutri-values span {
+  width: 99%;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* NUTRI */
 
 .main-content {
   background-color: var(--color-secundario);
   width: 100%;
   height: 93%;
   border-top-left-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-zone {
+  background-color: #fff;
+  width: 80%;
+  height: 90%;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.main-left,
+.main-right {
+  width: 48%;
+  height: 98%;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-right {
+  align-items: center;
+}
+
+.main-right h2 {
+  margin-top: 1.1rem;
+}
+
+.main-right ul {
+  width: 90%;
+}
+
+.main-left {
+}
+
+.main-left .img-container {
+  max-width: 280px;
+  margin-top: 1.1rem;
+  margin-left: 4rem;
 }
 
 .tabs-head {
@@ -90,8 +173,8 @@ aside {
 }
 
 .tab {
-  background-color: var(--color-aux-1);
-  color: var(--color-aux-2);
+  background-color: var(--color-verde3);
+  color: var(--color-claro2);
   width: 10rem;
   height: 3rem;
   margin: 3px;

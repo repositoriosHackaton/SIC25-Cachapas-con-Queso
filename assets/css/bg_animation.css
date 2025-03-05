@@ -1,0 +1,19 @@
+body {
+  margin: 0;
+  overflow: hidden;
+}
+
+.container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.falling-element {
+  z-index: -5;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: #a1ea89;
+  border-radius: 50%; /* Hace que los elementos sean círculos */
+}

@@ -68,3 +68,5 @@ async function consultarAPI(itemId, query) {
 // Ejemplo de uso:
 consultarAPI(123, "test"); // Consulta /items/123?q=test
 consultarAPI(456); // Consulta /items/456
+
+//---------------------------------------------------------------

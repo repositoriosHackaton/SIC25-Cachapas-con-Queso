@@ -1,11 +1,17 @@
 :root {
-  --color-principal: #a2ba58;
+  --color-principal: #91a750;
   --color-secundario: #dfe385;
   --color-aux-1: #ce8342;
   --color-aux-2: #35240d;
   --color-nutr-facts: #292b33;
   --color-n: #;
   --color-m: #;
+  --color-verde1: #91a750;
+  --color-verde2: #b0c912;
+  --color-verde3: #5e7342;
+  --color-claro1: #cfb3ad;
+  --color-verde5: #477805;
+  --color-claro2: #fbf7c7;
 }
 
 @font-face {

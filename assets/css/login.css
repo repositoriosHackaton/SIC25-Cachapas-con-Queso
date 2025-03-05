@@ -8,14 +8,14 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #a1ea89;
+  background-color: #fff;
 }
 
 /*Main Adjustments*/
 
 main {
   position: relative;
-  background-color: #fff;
+  background-color: #adf1c4;
   width: 25rem;
   height: 30rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
