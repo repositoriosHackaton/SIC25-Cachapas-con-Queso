@@ -12,6 +12,13 @@
   --color-claro1: #cfb3ad;
   --color-verde5: #477805;
   --color-claro2: #fbf7c7;
+
+  --color-principal: #b7df60;
+
+  --color-secundario: #ebfde7;
+
+  --color-verde3: #022e2b;
+  --color-nutr-facts: #022e2b;
 }
 
 @font-face {
