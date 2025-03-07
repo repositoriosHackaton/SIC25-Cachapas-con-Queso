@@ -4,6 +4,78 @@ const messageInput = document.getElementById("message-input");
 const sendButton = document.getElementById("send-button");
 const chatMessages = document.getElementById("chat-messages");
 
+const arregloRecetasPreCargadas = [
+  {
+    cadena: "Texto De ejemplo",
+    categoria: "Desayuno",
+    enlace:
+      "https://medlineplus.gov/spanish/recetas/avena-de-la-noche-a-la-manana/",
+    nombre: "Avena de la noche a la mañana",
+    imagenURL: "https://medlineplus.gov/images/recipe_overnightoatmeal.jpg",
+    ingredientes:
+      "1 taza de avena tradicional (old fashioned) sin cocer | 1 taza de yogur descremado | 1/2 taza de leche descremada o de 1 porciento de grasa | 1/2 taza de arándanos frescos o congelados | 1/2 taza de trocitos de manzana (aproximadamente | 1/3 manzana mediana cortada en 3 de diámetro)",
+    calorias: 5,
+    grasa: 5,
+    colesterol: 5,
+    sodio: 5,
+    carbohidratos: 5,
+    proteina: 5,
+    vitaminaA: 5,
+    vitaminaC: 5,
+    vitaminaD: 5,
+    calcio: 555,
+    hierro: 5,
+    potasio: 555,
+  },
+  {
+    cadena: "Texto De ejemplo",
+    categoria: "Desayuno",
+    enlace:
+      "https://medlineplus.gov/spanish/recetas/avena-de-la-noche-a-la-manana/",
+    nombre: "Avena de la noche a la mañana",
+    imagenURL: "https://medlineplus.gov/images/recipe_overnightoatmeal.jpg",
+    ingredientes:
+      "1 taza de avena tradicional (old fashioned) sin cocer | 1 taza de yogur descremado | 1/2 taza de leche descremada o de 1 porciento de grasa | 1/2 taza de arándanos frescos o congelados | 1/2 taza de trocitos de manzana (aproximadamente | 1/3 manzana mediana cortada en 3 de diámetro)",
+    calorias: 5,
+    grasa: 5,
+    colesterol: 5,
+    sodio: 5,
+    carbohidratos: 5,
+    proteina: 5,
+    vitaminaA: 5,
+    vitaminaC: 5,
+    vitaminaD: 5,
+    calcio: 555,
+    hierro: 5,
+    potasio: 555,
+  },
+  {
+    nombre: "Juan",
+    edad: 30,
+    ciudad: "Madrid",
+  },
+  {
+    nombre: "María",
+    edad: 25,
+    ciudad: "Barcelona",
+  },
+  {
+    nombre: "Pedro",
+    edad: 35,
+    ciudad: "Valencia",
+  },
+  {
+    nombre: "Pedro",
+    edad: 35,
+    ciudad: "Valencia",
+  },
+  {
+    nombre: "Pedro",
+    edad: 35,
+    ciudad: "Valencia",
+  },
+];
+
 function sendMessage() {
   const message = messageInput.value;
   if (message) {
@@ -52,7 +124,8 @@ function cargaRecetas() {
   document.addEventListener("click", function (event) {
     if (event.target.classList.contains("history-msg")) {
       const idMensaje = event.target.id;
-      cargarRecetaMain(idMensaje);
+      const numeroID = parseInt(idMensaje.replace("receta-aside-", ""));
+      cargarRecetaMain(idMensaje, numeroID);
     }
   });
 }
@@ -62,51 +135,49 @@ document.addEventListener("DOMContentLoaded", (e) => {
   cargaRecetas();
 });
 
-// async function consultarAPI(itemId, query) {
-//   const url = `http://127.0.0.1:8000/items/${itemId}${
-//     query ? `?q=${query}` : ""
-//   }`;
+async function cargarRecetaMain(cadenaTexto, numeroID) {
+  const $tabs = document.querySelectorAll(".tab");
 
-//   try {
-//     const respuesta = await fetch(url);
-//     const datos = await respuesta.json();
-//     console.log(datos); // Imprime el resultado en la consola
-//   } catch (error) {
-//     console.error("Error al consultar la API:", error);
-//   }
-// }
-
-// // Ejemplo de uso:
-// consultarAPI(123, "test"); // Consulta /items/123?q=test
-// consultarAPI(456); // Consulta /items/456
-
-//---------------------------------------------------------------
-
-async function cargarRecetaMain(cadenaTexto) {
-  try {
-    const response = await fetch(
-      `http://127.0.0.1:8000/obtener_ejemplo?cadena_texto=${cadenaTexto}`
-    );
-    const datos = await response.json();
-
-    // Imprimir el objeto JSON completo
-    crearTab("tabs-head", datos.nombre);
-    cargarJsonMain("main-content", datos);
-
-    // Imprimir cada clave con su valor
-    for (const clave in datos) {
-      console.log(`${clave}: ${datos[clave]}`);
+  let band = true;
+  for (let i = 0; i < $tabs.length; i++) {
+    const $tab = $tabs[i];
+    const id = parseInt($tab.id.replace("tab-", ""));
+    console.log($tab);
+    if (numeroID === id) {
+      band = false;
+      console.log(band);
+      break;
     }
+  }
 
-    return datos; // Opcional: retornar los datos para usarlos en otro lugar
-  } catch (error) {
-    console.error("Error al obtener datos:", error);
-    return null; // Opcional: retornar null en caso de error
+  if (band) {
+    // Si no existe una Tab
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:8000/obtener_ejemplo?cadena_texto=${cadenaTexto}`
+      );
+      const datos = await response.json();
+
+      // Imprimir el objeto JSON completo
+      crearTab("tabs-head", datos.nombre, numeroID);
+      cargarJsonMain("main-content", datos);
+
+      // Imprimir cada clave con su valor
+      for (const clave in datos) {
+        console.log(`${clave}: ${datos[clave]}`);
+      }
+
+      return datos; // Opcional: retornar los datos para usarlos en otro lugar
+    } catch (error) {
+      console.error("Error al obtener datos:", error);
+      return null; // Opcional: retornar null en caso de error
+    }
+  } else {
+    // Si existe una tab
+    cargarJsonMain("main-content", arregloRecetasPreCargadas[numeroID]);
+    focusTab(numeroID);
   }
 }
-
-// Ejemplo de uso:
-const texto = "Texto de ejemplo";
 
 function cargarJsonMain(idContenedor, recetaJson) {
   $contenedor = document.getElementById(idContenedor);
@@ -142,7 +213,7 @@ function cargarJsonMain(idContenedor, recetaJson) {
             </div>
           </div>
           <div class="main-right">
-            <h2>TÍTULO DE LA RECETA</h2>
+            <h2>${recetaJson.nombre}</h2>
             <ul id="ingredientes">
               <li>Ingrediente1</li>
               <li>Ingrediente2</li>
@@ -160,7 +231,7 @@ function cargarJsonMain(idContenedor, recetaJson) {
       </div>`;
 }
 
-function crearTab(idContenedor, titulo) {
+function crearTab(idContenedor, titulo, numeroID) {
   const $contenedor = document.getElementById(idContenedor);
 
   if ($contenedor) {
@@ -170,9 +241,18 @@ function crearTab(idContenedor, titulo) {
     const tituloTab = document.createElement("h2");
     tituloTab.textContent = titulo;
 
+    nuevoTab.id = `receta-aside-${numeroID}`;
+
     nuevoTab.appendChild(tituloTab);
     $contenedor.appendChild(nuevoTab);
   } else {
     console.error(`No se encontró el contenedor con ID: ${idContenedor}`);
   }
+}
+
+function focusTab(numeroID) {
+  $viejaTab = document.querySelector(".focusTab");
+  $nuevaTab = document.getElementById(`receta-aside-${numeroID}`);
+  $viejaTab.classList.remove("focusTab");
+  $nuevaTab.classList.add("focusTab");
 }
