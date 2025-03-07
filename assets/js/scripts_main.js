@@ -6,11 +6,11 @@ const chatMessages = document.getElementById("chat-messages");
 
 const arregloRecetasPreCargadas = [
   {
-    cadena: "Texto De ejemplo",
+    cadena: "Receta0",
     categoria: "Desayuno",
     enlace:
       "https://medlineplus.gov/spanish/recetas/avena-de-la-noche-a-la-manana/",
-    nombre: "Avena de la noche a la mañana",
+    nombre: "Receta0",
     imagenURL: "https://medlineplus.gov/images/recipe_overnightoatmeal.jpg",
     ingredientes:
       "1 taza de avena tradicional (old fashioned) sin cocer | 1 taza de yogur descremado | 1/2 taza de leche descremada o de 1 porciento de grasa | 1/2 taza de arándanos frescos o congelados | 1/2 taza de trocitos de manzana (aproximadamente | 1/3 manzana mediana cortada en 3 de diámetro)",
@@ -28,11 +28,11 @@ const arregloRecetasPreCargadas = [
     potasio: 555,
   },
   {
-    cadena: "Texto De ejemplo",
+    cadena: "Receta1",
     categoria: "Desayuno",
     enlace:
       "https://medlineplus.gov/spanish/recetas/avena-de-la-noche-a-la-manana/",
-    nombre: "Avena de la noche a la mañana",
+    nombre: "Receta1",
     imagenURL: "https://medlineplus.gov/images/recipe_overnightoatmeal.jpg",
     ingredientes:
       "1 taza de avena tradicional (old fashioned) sin cocer | 1 taza de yogur descremado | 1/2 taza de leche descremada o de 1 porciento de grasa | 1/2 taza de arándanos frescos o congelados | 1/2 taza de trocitos de manzana (aproximadamente | 1/3 manzana mediana cortada en 3 de diámetro)",
@@ -50,29 +50,114 @@ const arregloRecetasPreCargadas = [
     potasio: 555,
   },
   {
-    nombre: "Juan",
-    edad: 30,
-    ciudad: "Madrid",
+    cadena: "Receta2",
+    categoria: "Desayuno",
+    enlace:
+      "https://medlineplus.gov/spanish/recetas/avena-de-la-noche-a-la-manana/",
+    nombre: "Receta2",
+    imagenURL: "https://medlineplus.gov/images/recipe_overnightoatmeal.jpg",
+    ingredientes:
+      "1 taza de avena tradicional (old fashioned) sin cocer | 1 taza de yogur descremado | 1/2 taza de leche descremada o de 1 porciento de grasa | 1/2 taza de arándanos frescos o congelados | 1/2 taza de trocitos de manzana (aproximadamente | 1/3 manzana mediana cortada en 3 de diámetro)",
+    calorias: 5,
+    grasa: 5,
+    colesterol: 5,
+    sodio: 5,
+    carbohidratos: 5,
+    proteina: 5,
+    vitaminaA: 5,
+    vitaminaC: 5,
+    vitaminaD: 5,
+    calcio: 555,
+    hierro: 5,
+    potasio: 555,
   },
   {
-    nombre: "María",
-    edad: 25,
-    ciudad: "Barcelona",
+    cadena: "Receta3",
+    categoria: "Desayuno",
+    enlace:
+      "https://medlineplus.gov/spanish/recetas/avena-de-la-noche-a-la-manana/",
+    nombre: "Receta3",
+    imagenURL: "https://medlineplus.gov/images/recipe_overnightoatmeal.jpg",
+    ingredientes:
+      "1 taza de avena tradicional (old fashioned) sin cocer | 1 taza de yogur descremado | 1/2 taza de leche descremada o de 1 porciento de grasa | 1/2 taza de arándanos frescos o congelados | 1/2 taza de trocitos de manzana (aproximadamente | 1/3 manzana mediana cortada en 3 de diámetro)",
+    calorias: 5,
+    grasa: 5,
+    colesterol: 5,
+    sodio: 5,
+    carbohidratos: 5,
+    proteina: 5,
+    vitaminaA: 5,
+    vitaminaC: 5,
+    vitaminaD: 5,
+    calcio: 555,
+    hierro: 5,
+    potasio: 555,
   },
   {
-    nombre: "Pedro",
-    edad: 35,
-    ciudad: "Valencia",
+    cadena: "Receta4",
+    categoria: "Desayuno",
+    enlace:
+      "https://medlineplus.gov/spanish/recetas/avena-de-la-noche-a-la-manana/",
+    nombre: "Receta4",
+    imagenURL: "https://medlineplus.gov/images/recipe_overnightoatmeal.jpg",
+    ingredientes:
+      "1 taza de avena tradicional (old fashioned) sin cocer | 1 taza de yogur descremado | 1/2 taza de leche descremada o de 1 porciento de grasa | 1/2 taza de arándanos frescos o congelados | 1/2 taza de trocitos de manzana (aproximadamente | 1/3 manzana mediana cortada en 3 de diámetro)",
+    calorias: 5,
+    grasa: 5,
+    colesterol: 5,
+    sodio: 5,
+    carbohidratos: 5,
+    proteina: 5,
+    vitaminaA: 5,
+    vitaminaC: 5,
+    vitaminaD: 5,
+    calcio: 555,
+    hierro: 5,
+    potasio: 555,
   },
   {
-    nombre: "Pedro",
-    edad: 35,
-    ciudad: "Valencia",
+    cadena: "Receta5",
+    categoria: "Desayuno",
+    enlace:
+      "https://medlineplus.gov/spanish/recetas/avena-de-la-noche-a-la-manana/",
+    nombre: "Receta5",
+    imagenURL: "https://medlineplus.gov/images/recipe_overnightoatmeal.jpg",
+    ingredientes:
+      "1 taza de avena tradicional (old fashioned) sin cocer | 1 taza de yogur descremado | 1/2 taza de leche descremada o de 1 porciento de grasa | 1/2 taza de arándanos frescos o congelados | 1/2 taza de trocitos de manzana (aproximadamente | 1/3 manzana mediana cortada en 3 de diámetro)",
+    calorias: 5,
+    grasa: 5,
+    colesterol: 5,
+    sodio: 5,
+    carbohidratos: 5,
+    proteina: 5,
+    vitaminaA: 5,
+    vitaminaC: 5,
+    vitaminaD: 5,
+    calcio: 555,
+    hierro: 5,
+    potasio: 555,
   },
   {
-    nombre: "Pedro",
-    edad: 35,
-    ciudad: "Valencia",
+    cadena: "Receta7",
+    categoria: "Desayuno",
+    enlace:
+      "https://medlineplus.gov/spanish/recetas/avena-de-la-noche-a-la-manana/",
+    nombre: "Receta6",
+    imagenURL: "https://medlineplus.gov/images/recipe_overnightoatmeal.jpg",
+    ingredientes:
+      "1 taza de avena tradicional (old fashioned) sin cocer | 1 taza de yogur descremado | 1/2 taza de leche descremada o de 1 porciento de grasa | 1/2 taza de arándanos frescos o congelados | 1/2 taza de trocitos de manzana (aproximadamente | 1/3 manzana mediana cortada en 3 de diámetro)",
+    calorias: 5,
+    grasa: 5,
+    colesterol: 5,
+    sodio: 5,
+    carbohidratos: 5,
+    proteina: 5,
+    vitaminaA: 5,
+    vitaminaC: 5,
+    vitaminaD: 5,
+    calcio: 555,
+    hierro: 5,
+    potasio: 555,
   },
 ];
 
@@ -128,6 +213,13 @@ function cargaRecetas() {
       cargarRecetaMain(idMensaje, numeroID);
     }
   });
+  document.addEventListener("click", function (event) {
+    if (event.target.classList.contains("tab")) {
+      const idMensaje = event.target.id;
+      const numeroID = parseInt(idMensaje.replace("tab-", ""));
+      cargarRecetaMain(idMensaje, numeroID);
+    }
+  });
 }
 
 document.addEventListener("DOMContentLoaded", (e) => {
@@ -142,15 +234,14 @@ async function cargarRecetaMain(cadenaTexto, numeroID) {
   for (let i = 0; i < $tabs.length; i++) {
     const $tab = $tabs[i];
     const id = parseInt($tab.id.replace("tab-", ""));
-    console.log($tab);
     if (numeroID === id) {
       band = false;
-      console.log(band);
       break;
     }
   }
 
   if (band) {
+    console.log("No existe");
     // Si no existe una Tab
     try {
       const response = await fetch(
@@ -158,22 +249,20 @@ async function cargarRecetaMain(cadenaTexto, numeroID) {
       );
       const datos = await response.json();
 
-      // Imprimir el objeto JSON completo
-      crearTab("tabs-head", datos.nombre, numeroID);
+      crearTab("tabs-head", datos.nombre, numeroID, datos);
       cargarJsonMain("main-content", datos);
+      focusTab(numeroID);
 
-      // Imprimir cada clave con su valor
-      for (const clave in datos) {
-        console.log(`${clave}: ${datos[clave]}`);
-      }
-
-      return datos; // Opcional: retornar los datos para usarlos en otro lugar
+      return datos;
     } catch (error) {
       console.error("Error al obtener datos:", error);
-      return null; // Opcional: retornar null en caso de error
+      return null;
     }
   } else {
+    console.log("Existe");
     // Si existe una tab
+    console.log(numeroID);
+    console.log(arregloRecetasPreCargadas[numeroID]);
     cargarJsonMain("main-content", arregloRecetasPreCargadas[numeroID]);
     focusTab(numeroID);
   }
@@ -231,7 +320,7 @@ function cargarJsonMain(idContenedor, recetaJson) {
       </div>`;
 }
 
-function crearTab(idContenedor, titulo, numeroID) {
+function crearTab(idContenedor, titulo, numeroID, recetaJson) {
   const $contenedor = document.getElementById(idContenedor);
 
   if ($contenedor) {
@@ -241,10 +330,12 @@ function crearTab(idContenedor, titulo, numeroID) {
     const tituloTab = document.createElement("h2");
     tituloTab.textContent = titulo;
 
-    nuevoTab.id = `receta-aside-${numeroID}`;
+    nuevoTab.id = `tab-${numeroID}`;
 
     nuevoTab.appendChild(tituloTab);
     $contenedor.appendChild(nuevoTab);
+
+    arregloRecetasPreCargadas[numeroID] = recetaJson;
   } else {
     console.error(`No se encontró el contenedor con ID: ${idContenedor}`);
   }
@@ -252,7 +343,8 @@ function crearTab(idContenedor, titulo, numeroID) {
 
 function focusTab(numeroID) {
   $viejaTab = document.querySelector(".focusTab");
-  $nuevaTab = document.getElementById(`receta-aside-${numeroID}`);
+  $nuevaTab = document.getElementById(`tab-${numeroID}`);
+
   $viejaTab.classList.remove("focusTab");
   $nuevaTab.classList.add("focusTab");
 }
