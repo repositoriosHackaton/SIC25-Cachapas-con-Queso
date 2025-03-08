@@ -6,28 +6,9 @@ import json
 import google.generativeai as genai
 import numpy as np
 import pandas as pd
-import os
-from langchain_openai import AzureOpenAIEmbeddings
 from dotenv import load_dotenv
 
-# Config dataset
-
-load_dotenv()
-
-df_embeddings = pd.read_csv('assets/data/datos_embeddings_actualizado.csv')
-
-for columna in [
-    "Categoria_Embeddings", "Nombre_Embeddings", "Ingredientes_Embeddings", "Calorias_Embeddings",
-    "Grasa Total(gr)_Embeddings", "Colesterol(mg)_Embeddings", "Sodio(mg)_Embeddings", "Carbohidrato Total(gr)_Embeddings",
-    "Proteina(gr)_Embeddings", "Vitamina A(mcg)_Embeddings", "Vitamina C(mg)_Embeddings", "Vitamina D(mcg)_Embeddings",
-    "Calcio(mg)_Embeddings", "Hierro(mg)_Embeddings", "Potasio(mg)_Embeddings"
-]:
-    df_embeddings[columna] = df_embeddings[columna].apply(
-        lambda x: np.array([float(i) for i in x.strip("[]").replace(",", "").split()])
-    )
-
-
-# Config Google API
+#Config Google
 genai.configure(api_key="AIzaSyAjE1QNbVUs-5tDOOcWQa_vFdZxxqd1Ass")
 
 model = genai.GenerativeModel('gemini-1.5-flash')
@@ -73,7 +54,9 @@ ingredientes_no_deseados: {lista de cadenas}
 vitaminas_minerales: {lista de cadenas}
 }
 
-De no ser mencionado alguno de los elementos del json simplemente colocar el value de la key en null.
+De no ser mencionado alguno de los elementos del json simplemente colocar el value de la key en none.
+
+Toma en cuenta que en el caso de no hayan ingredientes_deseados, ingredientes_no_deseados ni vitaminas_minerales nunca debes colocar none en sus valores, en cambio coloca una lista vacía "[]" de tipo lista
 
 Corrige cualquier error gramatical o de sintaxis en los elementos que se planean introducir en el json.
 
@@ -87,6 +70,24 @@ Por último, si la cadena no tiene nada que ver con el tema de nutrición coloca
 """
 
 response = chat.send_message(prompt_inicial)
+
+#Config Dataset
+
+load_dotenv()
+
+df_embeddings = pd.read_csv('assets/data/datos_embeddings_actualizado.csv')
+
+for columna in [
+    "Categoria_Embeddings", "Nombre_Embeddings", "Ingredientes_Embeddings", "Calorias_Embeddings",
+    "Grasa Total(gr)_Embeddings", "Colesterol(mg)_Embeddings", "Sodio(mg)_Embeddings", "Carbohidrato Total(gr)_Embeddings",
+    "Proteina(gr)_Embeddings", "Vitamina A(mcg)_Embeddings", "Vitamina C(mg)_Embeddings", "Vitamina D(mcg)_Embeddings",
+    "Calcio(mg)_Embeddings", "Hierro(mg)_Embeddings", "Potasio(mg)_Embeddings"
+]:
+    df_embeddings[columna] = df_embeddings[columna].apply(
+        lambda x: np.array([float(i) for i in x.strip("[]").replace(",", "").split()])
+    )
+
+#Config FastAPI
 
 class RespuestaAPIExterna(BaseModel):
     # Define la estructura de la respuesta de la API externa
@@ -125,159 +126,24 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+#Endpoints
+
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
-
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: str = None):
-    return {"item_id": item_id, "q": q}
-
-@app.get("/obtener_datos")
-async def obtener_datos(cadena_texto: str):
-    """
-    Recibe una cadena de texto, hace una solicitud a una API externa,
-    y retorna un JSON con los datos especificados.
-    """
-    url_api_externa = f"URL_DE_LA_API_EXTERNA?q={cadena_texto}"  # Reemplaza con la URL real
-
-    try:
-        respuesta = requests.get(url_api_externa)
-        respuesta.raise_for_status()  # Lanza una excepción para errores HTTP
-        datos_api_externa = RespuestaAPIExterna(**respuesta.json())
-
-        # Crea el JSON de respuesta con los datos formateados
-        respuesta_formateada = {
-            "Categoria": datos_api_externa.categoria,
-            "Enlace": datos_api_externa.enlace,
-            "Nombre": datos_api_externa.nombre,
-            "ImagenURL": datos_api_externa.imagenURL,
-            "Ingredientes": datos_api_externa.ingredientes,
-            "Calorias": datos_api_externa.calorias,
-            "Grasa": datos_api_externa.grasa_total,
-            "Colesterol": datos_api_externa.colesterol,
-            "Sodio": datos_api_externa.sodio,
-            "Carbohidrato": datos_api_externa.carbohidrato_total,
-            "Proteina": datos_api_externa.proteina,
-            "Vitamina A": datos_api_externa.vitamina_a,
-            "Vitamina C": datos_api_externa.vitamina_c,
-            "Vitamina D": datos_api_externa.vitamina_d,
-            "Calcio": datos_api_externa.calcio,
-            "Hierro": datos_api_externa.hierro,
-            "Potasio": datos_api_externa.potasio,
-        }
-
-        return respuesta_formateada
-
-    except requests.exceptions.RequestException as e:
-        raise HTTPException(status_code=500, detail=f"Error al conectar con la API externa: {e}")
-    except ValueError as e:
-        raise HTTPException(status_code=500, detail=f"Error al procesar la respuesta de la API externa: {e}")
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error inesperado: {e}")
-    
-
-    
-@app.get("/obtener_ejemplo")
-async def obtener_datos_vacio(cadena_texto: str):
-    """
-    Recibe una cadena de texto y retorna un JSON con las claves especificadas,
-    pero con los valores vacíos (None) para que puedas reemplazarlos.
-    """
-    # Aquí puedes agregar la lógica para obtener los datos de la API externa
-    # o de cualquier otra fuente de datos.
-    # Por ahora, simularemos que no hay datos.
-
-    respuesta_formateada = {
-        "categoria": "Desayuno",
-        "enlace": "https://medlineplus.gov/spanish/recetas/avena-de-la-noche-a-la-manana/",
-        "nombre": "Avena de la noche a la mañana",
-        "imagenURL": "https://medlineplus.gov/images/recipe_overnightoatmeal.jpg",
-        "ingredientes": "1 taza de avena tradicional (old fashioned) sin cocer | 1 taza de yogur descremado | 1/2 taza de leche descremada o de 1 porciento de grasa | 1/2 taza de arándanos frescos o congelados | 1/2 taza de trocitos de manzana (aproximadamente | 1/3 manzana mediana cortada en 3 de diámetro)",
-        "calorias": 160,
-        "grasa": 3,
-        "colesterol": 5,
-        "sodio": 55,
-        "carbohidratos": 27,
-        "proteina": 8,
-        "vitaminaA": 27,
-        "vitaminaC": 8,
-        "vitaminaD": 0,
-        "calcio": 162,
-        "hierro": 1,
-        "potasio": 306,
-    }
-
-    return respuesta_formateada
+    return {"Fast": "API!!"}
 
 @app.get("/obtener_receta_json")
-async def obtenerRecetaJson(cadena_texto: str):
-    """
-    Recibe un nombre 
-    """
-    recetaJson = getRecetaJson(cadena_texto)
+async def obtener_receta_json(cadena_texto: str):
 
-    recetaFinal = obtener_receta(recetaJson)
-    
+    cadena_json = getRecetaJson(cadena_texto)
 
-    return recetaFinal
+    receta_json = obtener_receta(cadena_json)
 
-#FUNCIONES-----------------------------------------------------------------------------------------
-
-def getRecetaJson(cadena):
-    responseLocal = chat.send_message(cadena)
-    cadena_json = responseLocal.text.replace("json", "").replace("```", "").replace("```", "").strip()
-    datos = json.loads(cadena_json)
-
-    return datos
-
-def getEmbed(query):
-    result = genai.embed_content(
-        model="models/embedding-001",
-        content=query,
-        task_type="semantic_similarity")
-    return result['embedding']
-
-def similitud_cosenos(vect1: np.ndarray, vect2: np.ndarray) -> float:
-    dot_product = np.dot(vect1, vect2)
-    norm_A = np.linalg.norm(vect1)
-    norm_B = np.linalg.norm(vect2)
-    return dot_product / (norm_A * norm_B)
-
-def filtrar_recetas(json_query, df):
-
-    i = 0
-    for key, value in json_query.items():
-        print(i)
-        i = i+1
-        if value is not None:
-            if key == "calorías":
-                print("Filtrar Calo")
-                df = df[df["Calorias"] <= value]
-            elif key == "proteínas":
-                print("Filtrar Prote")
-                df = df[df["Proteina(gr)"] >= value]
-            elif key == "carbohidratos":
-                print("Filtrar carbo")
-                df = df[df["Carbohidrato Total(gr)"] <= value]
-            elif key == "grasas":
-                print("Filtrar gras")
-                df = df[df["Grasa Total(gr)"] <= value]
-            elif key == "ingredientes_deseados":
-                print("Filtrar ingNo")
-                df = df[df["Ingredientes"].apply(lambda x: all(ing.lower() in x.lower() for ing in value))]
-            elif key == "ingredientes_no_deseados":
-                print("Filtrar ingSi")
-                df = df[df["Ingredientes"].apply(lambda x: all(ing.lower() not in x.lower() for ing in value))]
-            elif key == "vitaminas_minerales":
-                print("Filtrar vit")
-                for vit in value:
-                    if vit in df.columns:
-                        df = df[df[vit] > 0]  # Filtra solo si el valor de la vitamina/mineral es mayor a 0
-    print("Filtrar Done")
-    return df
+    return receta_json
+#Functions
 
 def obtener_receta(query_client):
+
     # Filtrar recetas con los criterios dados
     df_filtrado = filtrar_recetas(query_client, df_embeddings)
     # Construir el texto para la búsqueda de similitudes
@@ -330,7 +196,51 @@ def obtener_receta(query_client):
                 "potasio": float(request_data["Potasio(mg)"]),
             }
 
-            return json.dumps(respuesta_formateada, indent=4, ensure_ascii=False)
+            return respuesta_formateada
 
     # Si no se encuentran recetas que coincidan con los criterios
     return json.dumps({"mensaje": "No se encontraron recetas que coincidan con los criterios."}, ensure_ascii=False)
+
+def filtrar_recetas(json_query, df):
+
+    for key, value in json_query.items():
+        if value is not None:
+            if key == "calorías":
+                df = df[df["Calorias"] <= value]
+            elif key == "proteínas":
+                df = df[df["Proteina(gr)"] >= value]
+            elif key == "carbohidratos":
+                df = df[df["Carbohidrato Total(gr)"] <= value]
+            elif key == "grasas":
+                df = df[df["Grasa Total(gr)"] <= value]
+            elif key == "ingredientes_deseados":
+                df = df[df["Ingredientes"].apply(lambda x: all(ing.lower() in x.lower() for ing in value))]
+            elif key == "ingredientes_no_deseados":
+                df = df[df["Ingredientes"].apply(lambda x: all(ing.lower() not in x.lower() for ing in value))]
+            elif key == "vitaminas_minerales":
+                for vit in value:
+                    if vit in df.columns:
+                        df = df[df[vit] > 0]  # Filtra solo si el valor de la vitamina/mineral es mayor a 0
+    print("Filtrar Done")
+    return df
+
+def similitud_cosenos(vect1: np.ndarray, vect2: np.ndarray) -> float:
+    dot_product = np.dot(vect1, vect2)
+    norm_A = np.linalg.norm(vect1)
+    norm_B = np.linalg.norm(vect2)
+    return dot_product / (norm_A * norm_B)
+
+def getRecetaJson(cadena):
+    responseLocal = chat.send_message(cadena)
+
+    cadena_json = responseLocal.text.replace("json", "").replace("```", "").replace("```", "").strip()
+    datos = json.loads(cadena_json)
+
+    return datos
+
+def getEmbed(cadena):
+    result = genai.embed_content(
+        model="models/embedding-001",
+        content=cadena,
+        task_type="semantic_similarity")
+    return result['embedding']

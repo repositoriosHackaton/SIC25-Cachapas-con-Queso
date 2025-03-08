@@ -166,12 +166,9 @@ function sendMessage() {
   const message = messageInput.value;
   if (message) {
     chatMessages.innerHTML += `<div class="user-message"><p >${message}</p></div>`;
+    obtenerRecetaJson(message);
     messageInput.value = "";
     chatMessages.scrollTop = chatMessages.scrollHeight;
-    crearHistoryMsg(
-      arregloRecetasPreCargadas.length,
-      arregloRecetasPreCargadas[0]
-    );
   }
 }
 
@@ -207,7 +204,7 @@ function chatSystem() {
     // Enviar mensaje enter
     if (event.key === "Enter") {
       sendMessage();
-      e.preventDefault();
+      event.preventDefault();
     }
   });
 }
@@ -495,7 +492,7 @@ async function obtenerRecetaJson(cadenaTexto) {
 }
 
 async function obtenerRecetaJson(cadenaTexto) {
-  const url = `/obtener_receta_json?cadena_texto=${encodeURIComponent(
+  const url = `http://127.0.0.1:8000/obtener_receta_json?cadena_texto=${encodeURIComponent(
     cadenaTexto
   )}`;
 
@@ -507,7 +504,7 @@ async function obtenerRecetaJson(cadenaTexto) {
     }
 
     const datos = await response.json();
-    // crearHistoryMsg()
+    crearHistoryMsg(arregloRecetasPreCargadas.length, datos);
     console.log(datos);
   } catch (error) {
     console.error("Error al obtener la receta:", error);
@@ -515,4 +512,24 @@ async function obtenerRecetaJson(cadenaTexto) {
   }
 }
 
-obtenerRecetaJson("Dame una receta de arroz con carne");
+// obtenerRecetaJson("Dame una receta de arroz con carne");
+
+// const cadenaTexto = "Dame una receta de arroz con carne";
+// fetch(
+//   `http://127.0.0.1:8000/obtener_receta_json?cadena_texto=${encodeURIComponent(
+//     cadenaTexto
+//   )}`
+// )
+//   .then((response) => {
+//     if (!response.ok) {
+//       throw new Error("Error en la solicitud");
+//     }
+//     return response.json(); // Parseamos la respuesta como JSON
+//   })
+//   .then((data) => {
+//     console.log("Receta obtenida:", data);
+//     // Aquí puedes manejar la respuesta (data) que obtuviste de FastAPI
+//   })
+//   .catch((error) => {
+//     console.error("Hubo un error con la solicitud:", error);
+//   });
