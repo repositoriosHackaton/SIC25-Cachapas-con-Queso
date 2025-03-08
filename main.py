@@ -2,6 +2,68 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import requests
+import json
+import google.generativeai as genai
+
+genai.configure(api_key="AIzaSyAjE1QNbVUs-5tDOOcWQa_vFdZxxqd1Ass")
+
+model = genai.GenerativeModel('gemini-1.5-flash')
+
+chat = model.start_chat(history=[])
+
+response = chat.send_message("Olvida cualquier conversación anterior")
+
+prompt_inicial = """
+A partir de ahora te voy a dar frases, que son cadenas con solicitudes, vas a seguir el siguiente criterio para entregarme respuestas, necesito lo siguiente:
+
+Entiende la intención y los elementos de la frase
+
+Ahora con esa frase, detecta características que se solicitan como:
+
+-Un booleano de nombre "receta" que sea true si el contenido de la cadena tiene que ver con recetas de comida
+
+-El número de calorías
+
+-El número de proteínas
+
+-El número de carbohidratos
+
+-El número de grasas
+
+-Los ingredientes deseados
+
+-Los Ingredientes no deseados
+
+-Las vitaminas y minerales
+
+
+
+y dámela en el siguiente formato json
+
+{
+calorías: {número entero de calorías}
+proteínas: {número entero de proteínas}
+carbohidratos: {número entero de carbohidratos}
+grasas: {número entero de grasas}
+ingredientes_deseados: {lista de cadenas}
+ingredientes_no_deseados: {lista de cadenas}
+vitaminas_minerales: {lista de cadenas}
+}
+
+De no ser mencionado alguno de los elementos del json simplemente colocar el value de la key en null.
+
+Corrige cualquier error gramatical o de sintaxis en los elementos que se planean introducir en el json.
+
+Además, cambia nombre locales a nombres internacionales cuando te encuentres con un ingrediente siendo mencionado en su nombre local.
+
+Cuando te den un ingrediente junto con la cantidad de gramos deseados de tal ingrediente ignora la cantidad de gramos y agrega únicamente el nombre del ingrediente.
+
+Responde únicamente en formato json, no quiero explicación ni texto innecesario en mis respuestas
+
+Por último, si la cadena no tiene nada que ver con el tema de nutrición coloca todos los values de las keys en null y el booleano receta en false
+"""
+
+response = chat.send_message(prompt_inicial)
 
 class RespuestaAPIExterna(BaseModel):
     # Define la estructura de la respuesta de la API externa
@@ -104,7 +166,6 @@ async def obtener_datos_vacio(cadena_texto: str):
     # Por ahora, simularemos que no hay datos.
 
     respuesta_formateada = {
-        "cadena": cadena_texto,
         "categoria": "Desayuno",
         "enlace": "https://medlineplus.gov/spanish/recetas/avena-de-la-noche-a-la-manana/",
         "nombre": "Avena de la noche a la mañana",
@@ -125,3 +186,16 @@ async def obtener_datos_vacio(cadena_texto: str):
     }
 
     return respuesta_formateada
+
+@app.get("/obtener_receta_json")
+async def obtener_datos_vacio(cadena_texto: str):
+    """
+    Recibe un nombre 
+    """
+
+    response = chat.send_message(cadena_texto)
+
+    cadena_json = response.text.replace("json", "").replace("```", "").replace("```", "").strip()
+    datos = json.loads(cadena_json)
+
+    return datos
