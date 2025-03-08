@@ -493,3 +493,26 @@ async function obtenerRecetaJson(cadenaTexto) {
     return null; // O puedes manejar el error de otra manera
   }
 }
+
+async function obtenerRecetaJson(cadenaTexto) {
+  const url = `/obtener_receta_json?cadena_texto=${encodeURIComponent(
+    cadenaTexto
+  )}`;
+
+  try {
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const datos = await response.json();
+    // crearHistoryMsg()
+    console.log(datos);
+  } catch (error) {
+    console.error("Error al obtener la receta:", error);
+    return null; // O puedes manejar el error de otra manera
+  }
+}
+
+obtenerRecetaJson("Dame una receta de arroz con carne");
