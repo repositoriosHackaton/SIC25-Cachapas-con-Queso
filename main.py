@@ -14,8 +14,10 @@ genai.configure(api_key="AIzaSyAjE1QNbVUs-5tDOOcWQa_vFdZxxqd1Ass")
 model = genai.GenerativeModel('gemini-1.5-flash')
 
 chat = model.start_chat(history=[])
+chat2 = model.start_chat(history=[])
 
-response = chat.send_message("Olvida cualquier conversación anterior")
+response = chat.send_message("Olvida cualquier conversación anterior, nuestra conversación empieza desde 0")
+response2 = chat2.send_message("Olvida cualquier conversación anterior")
 
 prompt_inicial = """
 A partir de ahora te voy a dar frases, que son cadenas con solicitudes, vas a seguir el siguiente criterio para entregarme respuestas, necesito lo siguiente:
@@ -69,7 +71,28 @@ Responde únicamente en formato json, no quiero explicación ni texto innecesari
 Por último, si la cadena no tiene nada que ver con el tema de nutrición coloca todos los values de las keys en null y el booleano receta en false
 """
 
+prompt_inicial2 = """
+
+A partir de ahora te voy a dar cadenas de ingredientes
+
+Se tratará de listas de ingredientes, separados con "|", necesito que identifiques el ingrediente que se menciona en cada separación, por ejemplo, el ingrediente en "2 tazas de avena tradicional en hojuelas" sería "avena" o el ingrediente en "1 cucharadita de polvo para hornear" sería "polvo para hornear".
+
+Necesito que me entregues una lista con todos los ingredientes que hayas identificado.
+
+Que cada ingrediente esté completamente en minúsculas.
+
+Además, si detectas más de un ingrediente en una separación, agrega los dos al arreglo, por ejemplo "margarina o mantequilla" debería agregar al arreglo tanto "margarina" como "mantequilla"
+
+Responde únicamente en formato de lista de python, no quiero explicación ni texto innecesario en mis respuestas.
+
+Vuelvo a hacer enfasis, no quiero ningúna respuesta que no sea en el formato de lista de python con [] y con todos los ingredientes que hayas identificado adentro.
+
+Si no identificas ningún ingrediente o la cadena no tiene nada que ver con comida simplemente retorna una lista vacía
+
+"""
+
 response = chat.send_message(prompt_inicial)
+response2 = chat2.send_message(prompt_inicial2)
 
 #Config Dataset
 
@@ -131,6 +154,15 @@ app.add_middleware(
 @app.get("/")
 def read_root():
     return {"Fast": "API!!"}
+
+@app.get("/obtener_ingredientes")
+async def obtener_ingredientes(cadena_texto: str):
+
+    responseLocal = chat2.send_message(cadena_texto)
+
+    lista_de_ingredientes = eval(responseLocal.text.replace("python", "").replace("```", "").replace("```", "").strip())
+
+    return lista_de_ingredientes
 
 @app.get("/obtener_receta_json")
 async def obtener_receta_json(cadena_texto: str):

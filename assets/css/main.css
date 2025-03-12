@@ -134,6 +134,17 @@ aside {
   justify-content: space-between;
 }
 
+.boton-receta {
+  padding: 2rem;
+  background-color: var(--color-nutr-facts);
+  color: var(--color-claro2);
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  border-bottom-right-radius: 20px;
+  border-top-left-radius: 20px;
+}
+
 /* NUTRI */
 
 .main-content {
@@ -154,6 +165,7 @@ aside {
 
 .main-zone {
   background-color: #fff;
+  position: relative;
   width: 80%;
   height: 90%;
   padding: 10px;
